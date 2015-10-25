@@ -40,7 +40,7 @@ class DITICConfig:
         :return: None
         """
         self.email_to_user = {
-            'vapi@uc.pt': 'Vapi',
+            'error404@uc.pt': 'error404',
             'mviegas@uc.pt': 'Margarida',
             'gina.costa@uc.pt': 'Gina',
             'asantos@uc.pt': 'Alex',
@@ -53,7 +53,7 @@ class DITICConfig:
             'apleitao@uc.pt': 'Paula',
         }
         self.email_limits = {
-            'vapi@uc.pt': {
+            'error404@uc.pt': {
                 'new': 7,
                 'open': 1,
                 'rejected': 7,
