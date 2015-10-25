@@ -40,7 +40,7 @@ class DITICConfig:
         :return: None
         """
         self.email_to_user = {
-            'error404@uc.pt': 'error404',
+            'vapi@uc.pt': 'Vapi',
             'mviegas@uc.pt': 'Margarida',
             'gina.costa@uc.pt': 'Gina',
             'asantos@uc.pt': 'Alex',
@@ -51,9 +51,10 @@ class DITICConfig:
             'olivio@uc.pt': 'Olivio',
             'cdantas@uc.pt': 'Carla',
             'apleitao@uc.pt': 'Paula',
+            'error404@uc.pt': 'Error404',
         }
         self.email_limits = {
-            'error404@uc.pt': {
+            'vapi@uc.pt': {
                 'new': 7,
                 'open': 1,
                 'rejected': 7,
@@ -108,6 +109,11 @@ class DITICConfig:
                 'open': 2,
                 'rejected': 5,
             },
+            'error404@uc.pt': {
+                'new': 5,
+                'open': 2,
+                'rejected': 5,
+            }
         }
         self.list_status = [
             'new',
@@ -118,11 +124,11 @@ class DITICConfig:
             'deleted',
         ]
         self.system = {
-            'working_dir': '.../ditic_kanban', # o path até chegarem à pasta ditic_kanban da dashboard
+            'working_dir': '/home/ngsantos/env/dashboard/ditic_kanban',
             'summary_file': 'summary',
-            'server': '', # o endereço que metem no browser para aceder ao RT
+            'server': 'localhost/rt',
             'username': 'root',
-            'password': '', # a vossa password
+            'password': 'palito20',
             'statistics_file': 'statistics',
         }
 
