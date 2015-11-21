@@ -103,6 +103,7 @@ def auth():
 def email_detail(email):
     start_time = time()
 
+
     result = create_default_result()
     if request.query.o == '' or not user_auth.check_id(request.query.o):
         result.update({'message': ''})
@@ -181,8 +182,13 @@ def search():
     return template('search', result)
 
 
-@get('/ticket/<ticket_id>/action/<action>')
+@route('/ticket/<ticket_id>/action/<action>')
 def ticket_action(ticket_id, action):
+    ticket_action_2(ticket_id, action)
+    redirect("/detail/"+request.query.email+"?o="+request.query.o)
+
+
+def ticket_action_2(ticket_id, action):
     start_time = time()
 
     result = create_default_result()
@@ -218,6 +224,8 @@ def ticket_action(ticket_id, action):
         return template('ticket_list', result)
     else:
         return template('detail', result)
+
+
 
 
 @route("/static/<filepath:path>", name="static")
