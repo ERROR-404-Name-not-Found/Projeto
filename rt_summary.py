@@ -175,7 +175,8 @@ def get_summary_info():
         }
     :return:
     """
-
+    generate_summary_file()
+    
     # Read configuration
     config = DITICConfig()
 
