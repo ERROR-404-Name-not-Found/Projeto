@@ -361,6 +361,9 @@ def get_statistics(start_date, end_date):
     :param end_date: string with last day in YYYY-MM-DD
     :return: a dictionary with the statistics
     """
+
+    stats_update_json_file()
+
     result_dates = {}
     current_date = end_date
     month_data = {}
