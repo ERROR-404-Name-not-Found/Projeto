@@ -130,7 +130,35 @@ def get_list_of_tickets(rt_object, query, detail=True):
             )
 
     return result
+#-----------------------------------------------------------------------------------------------------
+def comment_ticket(rt_object, ticket_id, comment):
+    """
+    Modify ticket attributes. The first variable is the ticket ID to be changed. The second variable will be
+    a dictionary with a combination of attribute and its new value
 
+    :param ticket_id: the ticket ID (a string with the ticket number)
+    :param new_values: a dictionary with a relation attribute and its new value. Example: { 'Status': 'new', ... }
+    :return: Operation result
+    """
+
+    dic = {'id': ticket_id, 'Action': 'comment','Text': comment}
+    content = ''
+    for key in dic:
+        content += key + ': ' + dic[key] + '\n'
+
+
+    # Information required for RT query
+    uri = 'ticket/' + str(ticket_id) + '/comment'
+    data = {'content' : content}
+
+    # Modify the ticket
+    try:
+        return rt_object.get_data_from_rest(uri, data)
+    except ValueError as e:
+        raise ValueError(e)
+
+
+#------------------------------------------------------------------------------------------
 
 def modify_ticket(rt_object, ticket_id, new_values):
     """
