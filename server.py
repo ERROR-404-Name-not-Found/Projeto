@@ -225,8 +225,22 @@ def ticket_action_2(ticket_id, action):
     else:
         return template('detail', result)
 
+@get('/<ticket_id>/comment')
+def get_comment (ticket_id):
 
+    result = create_default_result()
+    result.update({'username': user_auth.get_email_from_id(request.query.o)})
+    result.update({'email': request.query.email})
+    result.update({'username_id': request.query.o})
+    result.update({'ticket_id': ticket_id})
 
+    return template ('comment', result)
+
+@post('/<ticket_id>/comment')
+def comment (ticket_id):
+    from ditic_kanban.rt_api import comment_ticket
+    comment_ticket(user_auth.get_rt_object_from_email(user_auth.get_email_from_id(request.query.o)),ticket_id,request.forms.get('comment'))
+    return redirect('/detail/' + request.query.email + '?o=' + request.query.o)
 
 @route("/static/<filepath:path>", name="static")
 def static(filepath):
@@ -238,4 +252,3 @@ def start_server():
 
 if __name__ == '__main__':
     start_server()
-
