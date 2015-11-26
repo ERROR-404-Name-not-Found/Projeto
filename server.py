@@ -242,6 +242,55 @@ def comment (ticket_id):
     comment_ticket(user_auth.get_rt_object_from_email(user_auth.get_email_from_id(request.query.o)),ticket_id,request.forms.get('comment'))
     return redirect('/detail/' + request.query.email + '?o=' + request.query.o)
 
+#--------------------------------------------------------
+@get('/new_ticket')
+def get_newTicket ():
+
+    result = create_default_result()
+
+    result = create_default_result()
+    if request.query.o == '' or not user_auth.check_id(request.query.o):
+        result.update({'message': ''})
+        return template('auth', result)
+
+    result.update({'username': user_auth.get_email_from_id(request.query.o)})
+    result.update({'email': request.query.email})
+    result.update({'username_id': request.query.o})
+
+    return template ('new_ticket', result)
+
+@post('/new_ticket')
+def new_ticket ():
+    from ditic_kanban.rt_api import add_ticket
+    add_ticket(user_auth.get_rt_object_from_email(user_auth.get_email_from_id(request.query.o)), request.forms.get('requestor'), request.forms.get('subject'),request.forms.get('description'),request.forms.get('servico'))
+    return redirect('/detail/dir?o=' + request.query.o)
+
+#----------------------------------------------
+
+@get('/ticket/<ticket_id>/show')
+
+def get_ticketoshow (ticket_id):
+
+    from ditic_kanban.rt_api import get_ticketdetail
+
+    result = create_default_result()
+    if request.query.o == '' or not user_auth.check_id(request.query.o):
+        result.update({'message': ''})
+        return template('auth', result)
+
+    ticket = get_ticketdetail(user_auth.get_rt_object_from_email(user_auth.get_email_from_id(request.query.o)),ticket_id)
+
+    result = create_default_result()
+    result.update({'ticket':ticket})
+
+
+
+    return template ('show_ticket', result)
+
+
+#----------------------------------------------------------
+
+
 @route("/static/<filepath:path>", name="static")
 def static(filepath):
     return static_file(filepath, root=STATIC_PATH)
