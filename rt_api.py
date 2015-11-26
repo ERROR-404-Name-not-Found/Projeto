@@ -132,14 +132,8 @@ def get_list_of_tickets(rt_object, query, detail=True):
     return result
 #-----------------------------------------------------------------------------------------------------
 def comment_ticket(rt_object, ticket_id, comment):
-    """
-    Modify ticket attributes. The first variable is the ticket ID to be changed. The second variable will be
-    a dictionary with a combination of attribute and its new value
 
-    :param ticket_id: the ticket ID (a string with the ticket number)
-    :param new_values: a dictionary with a relation attribute and its new value. Example: { 'Status': 'new', ... }
-    :return: Operation result
-    """
+  #falta comentario
 
     dic = {'id': ticket_id, 'Action': 'comment','Text': comment}
     content = ''
@@ -159,6 +153,83 @@ def comment_ticket(rt_object, ticket_id, comment):
 
 
 #------------------------------------------------------------------------------------------
+
+#-----------------------------------------------------------------------------------------------------
+def add_ticket(rt_object, requestor, subject, description, servico):
+
+   #falta comentario
+
+    new_ticket = {'id': 'ticket/new',
+                'Queue': 'General',
+                'Requestor': requestor,
+                'Subject': subject,
+                'Owner': 'Nobody',
+                'Status': 'new',
+                'Priority': '0',
+                'InitialPriority': '0',
+                'Text': description,
+                'cf.{is - informatica e sistemas}' : 'DIR',
+                'cf.{servico}': servico
+                }
+
+    content = ''
+    for key in new_ticket:
+        content += key + ': ' + new_ticket[key] + '\n'
+
+    # Information required for RT query
+    uri = 'ticket/new'
+    data = {'content' : content}
+
+    # Modify the ticket
+    try:
+        return rt_object.get_data_from_rest(uri, data)
+    except ValueError as e:
+        raise ValueError(e)
+
+#------------------------------------------------------------------------------------------~
+def get_ticketdetail(rt_object,ticket_id):
+
+        #vai buscar uma string com toda a informaç~ao do ticket
+        response = rt_object.get_data_from_rest('/ticket/%s/show' % ticket_id, {})
+
+        # In this section, we must transform the result from server into the format
+        # this function is supposed to return
+
+
+        #vai correr as varias linhas,
+        for line in response:
+
+            # If the result is an error, return without any response (raise an exception)
+
+            #em caso de erro vai se embora
+            if line.startswith('your username or password is incorrect') \
+                    or line.startswith('invalid query:') \
+                    or line.startswith('no matching results.'):
+                raise ValueError(line)
+
+            # Ignore those lines...
+
+            #ignorar linhas que nao interessam
+            if line.startswith('rt/4') or line == '' or line == '--':
+                continue
+
+            # Here, we get the ticket ID. This information is critical
+
+            #faz parsin do id
+            if line.startswith('id: ticket/'):
+                result = {'id': line[11:]}
+                continue
+
+            # If we get into this part, then we must get the pair key / value returned by server
+            #faz parsin do resto das linhas
+            find_semicolon = line.find(':')
+            find_previous = line[:find_semicolon]
+            find_after = line[find_semicolon + 2:]
+
+            result [find_previous] = find_after
+
+
+        return result
 
 def modify_ticket(rt_object, ticket_id, new_values):
     """
