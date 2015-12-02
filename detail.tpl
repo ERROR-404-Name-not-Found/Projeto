@@ -86,19 +86,17 @@ Subject: {{ticket['subject']}}" href="/ticket/{{ticket['id']}}/show?o={{username
             % if ticket['kanban_actions']['stalled']:
             <a href="/ticket/{{ticket['id']}}/action/stalled?o={{username_id}}&email={{email}}">\</a>
             % end
-            % if ticket['kanban_actions']['forward']:
+             % if ticket['kanban_actions']['forward']:
             <a href="/ticket/{{ticket['id']}}/action/forward?o={{username_id}}&email={{email}}">&gt;</a>
-            <a href="/{{ticket['id']}}/comment?o={{username_id}}&email={{email}}" target="_blank">Comment</a>
+
+             <a href="#" onclick="window.open('/{{ticket['id']}}/comment?o={{username_id}}&email={{email}}', 'Comentario', 'STATUS=NO, TOOLBAR=NO, LOCATION=NO, DIRECTORIES=NO, RESISABLE=NO, SCROLLBARS=YES, TOP=10, LEFT=10, WIDTH=770, HEIGHT=400');">Comment</a>
             % end
-            <br>
             % end
         %   end
         </td>
         % end
     </tr>
 </table>
-
-
 <p>
     Time to execute: {{time_spent}}
 </p>
