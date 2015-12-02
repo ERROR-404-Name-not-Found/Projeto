@@ -5,59 +5,66 @@
 <table>
     <tr>
         <td>
-            TICKET INFORMAÇ^AO
+            <p><strong>Ticket Information</strong></p>
         </td>
     </tr>
     <tr>
         <td>
-            ID : {{ticket['id']}}
+            <p><strong>ID :</strong>{{ticket['id']}}</p>
         </td>
     </tr>
     <tr>
         <td>
-            Requesitor : {{ticket['requestors']}}
+            <p><strong>Requesitor :</strong> {{ticket['requestors']}}</p>
         </td>
     </tr>
     <tr>
         <td>
-           Assunto:  {{ticket ['subject']}}
+            <p><strong>Assunto:</strong>  {{ticket ['subject']}}</p>
         </td>
     </tr>
     <tr>
        <td>
-          Prioridade {{ticket['priority']}}
+          <p><strong>Prioridade:</strong> {{ticket['priority']}}</p>
         </td>
     </tr>
     <tr>
        <td>
-          Started: {{ticket['started']}}
+           <p><strong>Started:</strong> {{ticket['started']}}</p>
         </td>
     </tr>
     <tr>
        <td>
-          InitialPriority: {{ticket['initialpriority']}}
+           <p><strong>InitialPriority:</strong> {{ticket['initialpriority']}}</p>
         </td>
     </tr>
     <tr>
        <td>
-          FinalPriority:: {{ticket['finalpriority']}}
+           <p><strong>FinalPriority:</strong> {{ticket['finalpriority']}}</p>
         </td>
     </tr>
     <tr>
        <td>
-            Servico: {{ticket['cf.{servico}']}}
+             <p><strong>Servico:</strong> {{ticket['cf.{servico}']}}</p>
         </td>
     </tr>
     <tr>
        <td>
-            IS - Informatica e Sistemas : {{ticket['cf.{is - informatica e sistemas}']}}
+             <p><strong>IS - Informatica e Sistemas:</strong> {{ticket['cf.{is - informatica e sistemas}']}}</p>
         </td>
     <tr>
        <td>
-            links(ainda por trabalhar! nada para testar) : {{links}}
+             <p><strong>links(ainda por trabalhar! nada para testar):</strong> {{links}}</p>
         </td>
+    </tr>
     <tr>
        <td>
+             <p><strong>Owner:</strong> {{ticket['owner']}}</p>
+        </td>
+    </tr>
+
+    <td>
+       <!--
             Historico :
             % for dicionario in history:
             <tr>
@@ -82,6 +89,7 @@
 
 
             % end
+            -->
         </td>
 
 
