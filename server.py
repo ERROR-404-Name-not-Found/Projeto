@@ -224,7 +224,20 @@ def ticket_action_2(ticket_id, action):
         return template('ticket_list', result)
     else:
         return template('detail', result)
+#--------------------------------------------------------------------------------------------------------------------
+@get('/<ticket_id>/comment')
+def get_done (ticket_id):
 
+    result = create_default_result()
+    result.update({'username': user_auth.get_email_from_id(request.query.o)})
+    result.update({'email': request.query.email})
+    result.update({'username_id': request.query.o})
+    result.update({'ticket_id': ticket_id})
+
+    return template ('comment', result)
+
+
+#--------------------------------------------------------
 @get('/<ticket_id>/comment')
 def get_comment (ticket_id):
 
@@ -272,6 +285,9 @@ def new_ticket ():
 def get_ticketoshow (ticket_id):
 
     from ditic_kanban.rt_api import get_ticketdetail
+    from ditic_kanban.rt_api import get_ticket_links
+    from ditic_kanban.rt_api import get_tickethistory
+
 
     result = create_default_result()
     if request.query.o == '' or not user_auth.check_id(request.query.o):
@@ -279,9 +295,14 @@ def get_ticketoshow (ticket_id):
         return template('auth', result)
 
     ticket = get_ticketdetail(user_auth.get_rt_object_from_email(user_auth.get_email_from_id(request.query.o)),ticket_id)
+    links = get_ticket_links(user_auth.get_rt_object_from_email(user_auth.get_email_from_id(request.query.o)),ticket_id)
+    history = get_tickethistory(user_auth.get_rt_object_from_email(user_auth.get_email_from_id(request.query.o)),ticket_id)
+
 
     result = create_default_result()
     result.update({'ticket':ticket})
+    result.update({'links' : links})
+    result.update({'history': history})
 
 
 
