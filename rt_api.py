@@ -230,6 +230,59 @@ def get_ticketdetail(rt_object,ticket_id):
 
 
         return result
+#------------------------------------------------------------------------------------------~
+def get_tickethistory(rt_object,ticket_id):
+
+        #vai buscar uma string com toda a informaç~ao do ticket
+        response = rt_object.get_data_from_rest('/ticket/%s/history?format=l' % ticket_id, {})
+
+        # In this section, we must transform the result from server into the format
+        # this function is supposed to return
+
+        #todas as entradas da historia,mexer no ticket! criar comentario e cenas dessas
+        lista = []
+
+        #vai correr as varias linhas,
+        for line in response:
+
+            # If the result is an error, return without any response (raise an exception)
+
+            #em caso de erro vai se embora
+            if line.startswith('your username or password is incorrect') \
+                    or line.startswith('invalid query:') \
+                    or line.startswith('no matching results.'):
+                raise ValueError(line)
+
+            # Ignore those lines...
+
+            #ignorar linhas que nao interessam                          para ignorar os comentarios
+            if line.startswith('rt/4') or line == '' or line == '--' or line.startswith('#'):
+                continue
+
+            # Here, we get the ticket ID. This information is critical
+
+            #faz parsin do id
+            if line.startswith('id: ticket/'):
+                lista.append({'id': line[11:]})
+                continue
+
+            # If we get into this part, then we must get the pair key / value returned by server
+            #faz parsin do resto das linhas
+            find_semicolon = line.find(':')
+            find_previous = line[:find_semicolon]
+            find_after = line[find_semicolon + 2:]
+
+
+            #ver melhor, na pratica se nao encontrar ID ele continua a meter as informaç~oes no dicionario
+            if line.startswith('id'):
+                lista.append({find_previous: find_after})
+            else:
+                #ele esta andar ao contrario
+                lista[-1].update({find_previous: find_after})
+
+            #result [find_previous] = find_after: cada ticket tem um id e cada entrada da historia!
+
+        return lista
 
 def modify_ticket(rt_object, ticket_id, new_values):
     """
