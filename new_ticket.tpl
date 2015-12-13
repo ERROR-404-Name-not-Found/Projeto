@@ -4,10 +4,27 @@
     <table>
         <tr>
             <td>
-                requestor:
+                Requestor:
             </td>
             <td>
-                <input name="requestor" type="text"/>
+                <input name="requestor" type="text" value="{{username}}"/>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Cc:
+            </td>
+            <td>
+                <input name="cc" type="text"/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                AdminCc:
+            </td>
+            <td>
+                <input name="admincc" type="text"/>
             </td>
         </tr>
         <tr>
