@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,6 +15,7 @@
 % username_id = get('username_id', '')
 <a href="/?o={{username_id}}">home</a>
 <a href="/new_ticket?o={{username_id}}">New Ticket</a>
+<a href="/">Logout</a>
 {{!base}}
 </body>
 </html>
