@@ -41,8 +41,12 @@
         <td align="center"><strong>STALLED</strong></td>
         <td align="center">
             <strong>DONE</strong><br>
-            % status = 'resolved'
+            <input value="CLEAR" type="submit" />
+
+            <!--    % status = 'resolved'-->
+
         </td>
+
     </tr>
     <tr>
         % for status in ['new', 'open', 'stalled', 'resolved']:
@@ -72,7 +76,7 @@ TimeWorked: {{ticket['timeworked']}}
 
 Requestor: {{ticket['requestors']}}
 Subject: {{ticket['subject']}}" href="/ticket/{{ticket['id']}}/show?o={{username_id}}" target="_blank">
-                {{ticket['id']}}
+                <!--{{ticket['id']}}-->
                 % subject = ticket['subject']
                 % if len(ticket['subject']) > max_len:
                 %   subject = ticket['subject'][:max_len]+'...'
@@ -86,12 +90,16 @@ Subject: {{ticket['subject']}}" href="/ticket/{{ticket['id']}}/show?o={{username
             % if ticket['kanban_actions']['stalled']:
             <a href="/ticket/{{ticket['id']}}/action/stalled?o={{username_id}}&email={{email}}">\</a>
             % end
-             % if ticket['kanban_actions']['forward']:
-            <a href="/ticket/{{ticket['id']}}/action/forward?o={{username_id}}&email={{email}}">&gt;</a>
+             % if ticket['kanban_actions']['forward'] and ticket['status']!='open':
+                <a href="/ticket/{{ticket['id']}}/action/forward?o={{username_id}}&email={{email}}">&gt;</a>
+                <a href="#" onclick="window.open('/{{ticket['id']}}/comment?o={{username_id}}&email={{email}}', 'Comentario', 'STATUS=NO, TOOLBAR=NO, LOCATION=NO, DIRECTORIES=NO, RESISABLE=NO, SCROLLBARS=YES, TOP=10, LEFT=10, WIDTH=770, HEIGHT=400');">Comment</a>
 
-             <a href="#" onclick="window.open('/{{ticket['id']}}/comment?o={{username_id}}&email={{email}}', 'Comentario', 'STATUS=NO, TOOLBAR=NO, LOCATION=NO, DIRECTORIES=NO, RESISABLE=NO, SCROLLBARS=YES, TOP=10, LEFT=10, WIDTH=770, HEIGHT=400');">Comment</a>
+            % elif ticket['status']=='open':
+                <a href="/{{ticket['id']}}/done?o={{username_id}}&email={{email}}" target="_blank">Done</a>
             % end
-            % end
+
+            <br>
+           % end
         %   end
         </td>
         % end
